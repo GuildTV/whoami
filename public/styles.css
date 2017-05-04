@@ -1,0 +1,75 @@
+* {
+  /*-webkit-box-sizing: border-box;
+  Box-Sizing:border-box;                              */     /* This sets all elements to be the actual set dimensions, disregarding padding and borders */
+  -webkit-backface-visibility: hidden;                     /* Hide the backface of elements - usuefull for 3d effects */
+  -webkit-transition: translate3d(0,0,0);                  /* Turns on hardware acceleration - not known to be of benefit in CCG, but won't hurt */
+}
+html, body {
+  /*width:1920px;                                            /* Set to your channel's resolution */
+  /*height:1080px;                                           /* Set to your channel's resolution */
+  margin:0;                                                /* Use all available space */
+  padding:0;                                               /* Use all available space */
+  background:transparent;                                  /* The HTML consumer actually makes your background transparent by default, unless a color or image is specified - but this might be usefull when debugging in browsers */
+  overflow:hidden;                                         /* Hide any overflowing elements - to disable scollbars */
+  -webkit-font-smoothing:antialiased !important;           /* Set aliasing of fonts - possible options: none, antialiased,  subpixel-antialiased */
+}
+
+body {
+  background-image: url("background.png");
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+
+  font-family: "Courier New";
+  font-weight: bold;
+}
+
+#bouncing {
+  width: 22vw;
+  height: 25vh;
+
+  float: left;
+  position: absolute;
+
+  left: 50vw;
+  -webkit-transform: translate(-50%, 0); 
+  background: #ffffff;
+
+  animation-name: bouncingbox;
+  animation-duration: 1s;
+  animation-direction: alternate;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+}
+
+#projectname {
+  float: left;
+  position: absolute;
+
+  top: 48vh;
+  left: 50vw;
+  -webkit-transform: translate(-50%, 0); 
+
+  background: #000;
+  color: #fff;
+
+  padding: 15px;
+  font-size: 4.5em;
+  text-transform: uppercase;
+}
+
+@keyframes bouncingbox {
+  from {top: 10vh;}
+  to {top: 20vh;}
+}
+
+#details {
+  padding: 20px;
+}
+
+#details p {
+  font-size: 1.9em;
+  text-transform: uppercase;
+  color: #ffffff;
+  margin: 5px;
+
+}
