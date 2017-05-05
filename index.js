@@ -6,7 +6,7 @@ const app = express();
 app.use(express.static('public'))
 app.set('view engine', 'pug')
 
-const port = 3000;
+const port = 3030;
 
 const interfaces = os.networkInterfaces();
 const addresses = [];
@@ -63,7 +63,7 @@ function showCard(){
 	console.log("Showing Template on channels!");
 	for(let i of Object.keys(info)){
 		const ch = info[i];
-		connection.playHtmlPage(ch.id, 1, "http://127.0.0.1:3000/channel/"+ch.id);
+		connection.playHtmlPage(ch.id, 1, "http://127.0.0.1:"+port+"/channel/"+ch.id);
 	}
 
 	console.log(" ");
