@@ -1,0 +1,18 @@
+html
+  head
+    title Server Info
+  body
+    h2 Server Info
+    p Name: 
+      span= server.hostname
+    p Ip: 
+      span= server.address
+
+    each ch in allChannels
+      h3 Channel 
+        span= ch.id
+      p Mode: 
+        span= ch.format
+      p Device: 
+        span= ch.consumers
+  

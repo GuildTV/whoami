@@ -18,8 +18,8 @@ for (let k in interfaces) {
 	}
 }
 
-const info = {};
-const decklinks = {};
+let info = {};
+let decklinks = {};
 const server = {
 	hostname: os.hostname(),
 	address: addresses.join(", "),
@@ -77,6 +77,9 @@ function ensureArray(orig){
 function loadInfo(){
 	console.log("LOAD INFO");
 
+  info = {};
+  decklinks = {};
+
 	connection.infoServer().then(res => {
 		for (let data of ensureArray(res.response.data.channel)) {
 			const id = data.index;
@@ -113,20 +116,19 @@ function loadInfo(){
 		if (decklink === undefined || decklink.device === undefined)
 			return showCard();
 
-		for(let id in decklink.device){
-			decklinks[parseInt(id)+1] = decklink.device[id];
+		const devices = ensureArray(decklink.device);
+		for(let id in devices){
+			decklinks[parseInt(id)+1] = devices[id];
 		}
 
 		showCard();
 	})
 }
 
-app.get('/channel/:id', function (req, res) {
-	const id = req.params.id;
-
+function compileChannelInfo(id){
 	const channelInfo = info[id];
 	if (channelInfo === undefined)
-		return res.status(404).send('Not found');
+		return null;
 
 	const consumers = [];
 	if (channelInfo.consumers !== undefined){
@@ -148,10 +150,28 @@ app.get('/channel/:id', function (req, res) {
 	if (consumers.length == 0)
 		consumers.push("none");
 
-	let channel = Object.assign({}, channelInfo);
-		channel = Object.assign(channel, { consumers: consumers.join(", ") });
+	const channel = Object.assign({}, channelInfo);
+	return Object.assign(channel, { consumers: consumers.join(", ") });
+}
 
-    res.render('index', { server, channel});
+app.get('/channel/:id', function (req, res) {
+	const id = req.params.id;
+	const channel = compileChannelInfo(id);
+
+	if (channel === null)
+		res.status(404).send('Not found');
+
+  res.render('index', { server, channel});
+});
+
+app.get('/', function (req, res) {
+	const allChannels = [];
+
+	for (let k of Object.keys(info)){
+		allChannels.push(compileChannelInfo(k));
+	}
+
+  res.render('info', { server, allChannels});
 });
 
 app.listen(port, function () {
