@@ -12,7 +12,7 @@ const interfaces = os.networkInterfaces();
 const addresses = [];
 for (let k in interfaces) {
 	for (let addr of interfaces[k]) {
-		if (addr.family === 'IPv4' && !addr.internal) {
+		if (addr.family === 'IPv4' && !addr.internal && addr.address.indexOf("169.254") != 0) {
 			addresses.push(addr.address);
 		}
 	}
