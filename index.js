@@ -63,9 +63,11 @@ function showCard(){
 	console.log("Showing Template on channels!");
 	for(let i of Object.keys(info)){
 		const ch = info[i];
-		console.log(ch)
 		connection.playHtmlPage(ch.id, 1, "http://127.0.0.1:3000/channel/"+ch.id);
 	}
+
+	console.log(" ");
+	console.log('Press Ctrl-C to clear');
 }
 
 function ensureArray(orig){
