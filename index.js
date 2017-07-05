@@ -99,6 +99,8 @@ function loadInfo(){
 					consumers.push("Screen");
 				if (cons.type == "decklink-consumer")
 					consumers.push("decklink" + cons.device);
+				if (cons.type == "newtek-ivga-consumer")
+					consumers.push("Newteck NDI");
 			}
 			if (consumers.length > 0)
 				info[id].consumers = consumers;
